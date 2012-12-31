@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  default_language: MyString
+  site_title: MyString
+  welcome_text: MyText
+
+two:
+  default_language: MyString
+  site_title: MyString
+  welcome_text: MyText

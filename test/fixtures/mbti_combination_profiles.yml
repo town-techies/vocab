@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  mbti_detail: MyText
+  status: false
+
+two:
+  mbti_detail: MyText
+  status: false

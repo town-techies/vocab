@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  language_title: MyString
+  language_code: MyString
+  status: false
+
+two:
+  language_title: MyString
+  language_code: MyString
+  status: false
