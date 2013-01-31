@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120807071917) do
+ActiveRecord::Schema.define(:version => 20130131051941) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -48,6 +48,11 @@ ActiveRecord::Schema.define(:version => 20120807071917) do
     t.boolean  "paid"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "sound_file_name"
+    t.string   "sound_content_type"
+    t.integer  "sound_file_size"
+    t.datetime "sound_updated_at"
+    t.string   "category"
   end
 
   create_table "questions", :force => true do |t|
@@ -99,20 +104,21 @@ ActiveRecord::Schema.define(:version => 20120807071917) do
   end
 
   create_table "user_puzzles", :force => true do |t|
-    t.string   "user"
+    t.string   "device_id"
     t.integer  "puzzle_id"
     t.string   "score"
     t.string   "correct_answer"
     t.string   "wronge_answer"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "question_detail", :limit => 2147483647
   end
 
   create_table "users", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "deviseId"
-    t.string   "devise_name"
+    t.string   "deviceId"
+    t.string   "device_name"
     t.boolean  "paid"
   end
 

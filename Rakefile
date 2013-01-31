@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-MbtiAdmin::Application.load_tasks
+VocabTalesSat::Application.load_tasks

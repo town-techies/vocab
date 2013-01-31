@@ -42,5 +42,5 @@ gem "haml-rails"
 gem "jquery-rails"
 gem "settingslogic"
 gem 'fastercsv'
-#gem 'execjs'
-#gem 'therubyracer', :platforms => :ruby
+gem 'execjs'
+gem 'therubyracer', :platforms => :ruby
