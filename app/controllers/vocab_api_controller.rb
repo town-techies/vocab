@@ -7,24 +7,19 @@ class VocabApiController < ApplicationController
   end
   
 	def getAllPuzzlelist
-	 # render :text => params.inspect and return false
 		if params["pid"]
-		#	if params["paid"]
-		#	  @paid = ( params["paid"] == 'paid') ? true : false
-		#	  @puzzles = Puzzle.find(:all,:conditions => ["id=? and paid=?",params["pid"],@paid])
-		#	else
-		#	  @puzzles = Puzzle.find(:all,:conditions => ["id=? and paid=?",params["pid"],false])
-		#	end
 		@puzzles = Puzzle.find(:all,:conditions => ["id=? ",params["pid"]])
-			
-			
 		else
 			if !params["paid"].blank?
 			  @paid = ( params["paid"] == 'paid') ? true : false
 			  
 			  @puzzles = Puzzle.find(:all,:conditions => ["paid=?",@paid])
 			else
-				@puzzles = Puzzle.find(:all,:conditions => ["paid=?",false])
+			  if params['category'] == 'advance'
+				@puzzles = Puzzle.find(:all,:conditions => ["paid=? and category = ? ",false,'advance'])
+			  else
+				@puzzles = Puzzle.find(:all,:conditions => ["paid=? and category != ? ",false,'advance'])
+			  end
 			end
 		end
 		@result = []
@@ -36,7 +31,12 @@ class VocabApiController < ApplicationController
 		@data["paid"] = puzzle.paid
 		@data["title"] = puzzle.title
 		@data["updated_at"] = puzzle.updated_at
-		@data["sound_url"] = (puzzle.sound.url == '/sounds/original/missing.png' ) ? 'No sound' : "http://#{request.host_with_port}#{puzzle.sound.url}"	
+		@data["sound_url"] = (puzzle.sound.url == '/sounds/original/missing.png' ) ? 'No sound' : "http://#{request.host_with_port}#{puzzle.sound.url}"
+		if puzzle.category.blank?
+		  @data["category"] = ''
+		else
+		   @data["category"] = puzzle.category
+		end
 		@result << @data
 		end
 
