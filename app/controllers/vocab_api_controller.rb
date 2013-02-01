@@ -237,7 +237,7 @@ class VocabApiController < ApplicationController
     @user_puzzles.each do |user_puzzles|
      
       @puzzle_detail = user_puzzles.puzzle
-      if !user_puzzles.puzzle.category.blank? && user_puzzles.puzzle.category == 'advance'
+      if @puzzle_detail.category == 'advance'
 		info = {}
 		info["id"] = user_puzzles.id
 		info["device_id"] = user_puzzles.device_id
