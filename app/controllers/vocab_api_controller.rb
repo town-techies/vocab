@@ -222,6 +222,8 @@ class VocabApiController < ApplicationController
     @uid = params['uid'];
     @id = params["id"];
     @user_puzzles_paid = []
+    @user_puzzles_advance = []
+    @user_puzzles = []
     if(!params["pid"].nil? && !params["uid"].nil?) 
 	if(!params["id"].nil?)
 		@user_puzzles = UserPuzzle.find(:all,:conditions => ['device_id =? and puzzle_id = ? and id= ? ',@uid,@pid,@id])
@@ -235,25 +237,51 @@ class VocabApiController < ApplicationController
     @user_puzzles.each do |user_puzzles|
      
       @puzzle_detail = user_puzzles.puzzle
-      info = {}
-      info["id"] = user_puzzles.id
-      info["device_id"] = user_puzzles.device_id
-      info["puzzle_id"] = user_puzzles.puzzle_id
-      info["score"] = user_puzzles.score
-      info["correct_answer"] = user_puzzles.correct_answer
-      info["wronge_answer"] = user_puzzles.wronge_answer
-      info["created_at"] = user_puzzles.created_at
-      info["updated_at"] = user_puzzles.updated_at
-      info["question_detail"] = user_puzzles.question_detail
-      info["paid"] = @puzzle_detail.paid if !@puzzle_detail.nil?
+      if !user_puzzles.puzzle.category.blank? && user_puzzles.puzzle.category == 'advance'
+		info = {}
+		info["id"] = user_puzzles.id
+		info["device_id"] = user_puzzles.device_id
+		info["puzzle_id"] = user_puzzles.puzzle_id
+		info["score"] = user_puzzles.score
+		info["correct_answer"] = user_puzzles.correct_answer
+		info["wronge_answer"] = user_puzzles.wronge_answer
+		info["created_at"] = user_puzzles.created_at
+		info["updated_at"] = user_puzzles.updated_at
+		info["question_detail"] = user_puzzles.question_detail
+		info["paid"] = @puzzle_detail.paid if !@puzzle_detail.nil?
+  
+		@user_puzzles_advance << info
+      else
+		info = {}
+		info["id"] = user_puzzles.id
+		info["device_id"] = user_puzzles.device_id
+		info["puzzle_id"] = user_puzzles.puzzle_id
+		info["score"] = user_puzzles.score
+		info["correct_answer"] = user_puzzles.correct_answer
+		info["wronge_answer"] = user_puzzles.wronge_answer
+		info["created_at"] = user_puzzles.created_at
+		info["updated_at"] = user_puzzles.updated_at
+		info["question_detail"] = user_puzzles.question_detail
+		info["paid"] = @puzzle_detail.paid if !@puzzle_detail.nil?
 
       @user_puzzles_paid << info
+      end
+
     end
+    if params['category'] == 'advance'
+	  respond_to do |format|
+		format.html # index.html.erb
+		format.json  { render :json => @user_puzzles_advance}
+	  end	  
+	else
+	  respond_to do |format|
+		format.html # index.html.erb
+		format.json  { render :json => @user_puzzles_paid}
+	  end
+    end
+    
   
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json  { render :json => @user_puzzles_paid}
-    end
+
   end  
 
   def getAllQuestionwithAnswer
